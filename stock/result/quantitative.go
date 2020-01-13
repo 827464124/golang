@@ -24,7 +24,7 @@ func ConnDB() *sql.DB {
 }
 func QueryData(db *sql.DB,code string)  {
 	var skt = new(struct2db.StockInfo)
-	rows, err := db.Query("select code,name,high,close ,v_ma20 from his_stock_info where code = ?", code)
+	rows, err := db.Query("select code,name,high,close ,ma20 from his_stock_info where code = ?", code)
 	defer func() {
 		if rows != nil {
 			rows.Close() //可以关闭掉未scan连接一直占用
