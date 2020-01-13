@@ -36,7 +36,7 @@ func QueryData(db *sql.DB,code string)  {
 		return
 	}
 	for rows.Next() {
-		err = rows.Scan(&skt.Code,&skt.Name,&skt.High,&skt.Close,&skt.V_ma20) //不scan会导致连接不释放
+		err = rows.Scan(&skt.Code,&skt.Name,&skt.High,&skt.Close,&skt.Ma20) //不scan会导致连接不释放
 		if err != nil {
 			fmt.Printf("Scan failed,err:%v", err)
 			return
