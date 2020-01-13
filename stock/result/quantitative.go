@@ -23,7 +23,7 @@ func ConnDB() *sql.DB {
 
 }
 func QueryData(db *sql.DB,code string)  {
-	var skt struct2db.StockInfo
+	var skt = new(struct2db.StockInfo)
 	rows, err := db.Query("select code,name,high,close ,v_ma20 from his_stock_info where code = ?", code)
 	defer func() {
 		if rows != nil {
@@ -36,7 +36,7 @@ func QueryData(db *sql.DB,code string)  {
 		return
 	}
 	for rows.Next() {
-		err = rows.Scan(skt.Code,skt.Name,skt.High,skt.Close,skt.V_ma20) //不scan会导致连接不释放
+		err = rows.Scan(&skt.Code,&skt.Name,&skt.High,&skt.Close,&skt.V_ma20) //不scan会导致连接不释放
 		if err != nil {
 			fmt.Printf("Scan failed,err:%v", err)
 			return
