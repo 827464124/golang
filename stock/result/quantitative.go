@@ -8,7 +8,7 @@ import (
 	"time"
 	"../conf"
 )
-func connDB() *sql.DB {
+func ConnDB() *sql.DB {
 
 	dsn := fmt.Sprintf("%s:%s@%s(%s:%d)/%s",conf.USERNAME,conf.PASSWORD,conf.NETWORK,conf.SERVER,conf.PORT,conf.DATABASE)
 	DB,err := sql.Open("mysql",dsn)
@@ -22,7 +22,7 @@ func connDB() *sql.DB {
 	return DB
 
 }
-func queryData(db sql.DB,code string)  {
+func QueryData(db *sql.DB,code string)  {
 	var skt struct2db.StockInfo
 	rows, err := db.Query("select code,name,high,close ,v_ma20 from his_stock_info where code = ?", code)
 	defer func() {

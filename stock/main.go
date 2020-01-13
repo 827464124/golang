@@ -1,8 +1,7 @@
 package main
 
-import "database/sql"
-
+import "./result"
 func main(){
-	var db *sql.DB = connDB()
-	queryData(&db,"000001")
+	var db  = result.ConnDB()
+	result.QueryData(db,"000001")
 }
