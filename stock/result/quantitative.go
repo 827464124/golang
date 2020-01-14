@@ -72,7 +72,7 @@ func QueryData(db *sql.DB,code string)  {
 			ST.hasBuyIn = false
 			ST.salePrice = skt.Ma20
 			ST.value += (ST.salePrice - ST.buyPrice) * 100 *(1-0.0002)
-			fmt.Println("sale out ",skt.Date,"  " ,ST.buyPrice)
+			fmt.Println("sale out ",skt.Date,"  " ,ST.salePrice)
 		}
 		//fmt.Print(skt)
 
