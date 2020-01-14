@@ -55,7 +55,7 @@ func QueryData(db *sql.DB,code string)  {
 		}
 		if skt.Low > skt.Ma20 {
 			ST.lowestHighAvg  = true
-		}else if skt.Low < skt.Ma10 {
+		}else  {
 			ST.lowestHighAvg = false
 		}
 		if skt.High < skt.Ma20{
@@ -65,12 +65,12 @@ func QueryData(db *sql.DB,code string)  {
 		}
 		if ST.lowestHighAvg && ! ST.hasBuyIn {
 			ST.hasBuyIn = true
-			ST.buyPrice = skt.High
+			ST.buyPrice = skt.Close
 			fmt.Println("buy in ",skt.Date,"  " ,ST.buyPrice)
 		}
 		if !ST.lowestHighAvg && ST.hasBuyIn{
 			ST.hasBuyIn = false
-			ST.salePrice = skt.Low
+			ST.salePrice = skt.Ma20
 			ST.value += (ST.salePrice - ST.buyPrice) * 100 *(1-0.0002)
 			fmt.Println("sale out ",skt.Date,"  " ,ST.salePrice)
 		}
