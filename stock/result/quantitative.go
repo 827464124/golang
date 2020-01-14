@@ -14,6 +14,8 @@ type Status struct {
 	highestLowAvg bool
 	hasBuyIn bool
 	value float64
+	buyPrice float64
+	salePrice float64
 	number int
 }
 func ConnDB() *sql.DB {
@@ -63,14 +65,14 @@ func QueryData(db *sql.DB,code string)  {
 		}
 		if ST.lowestHighAvg && ! ST.hasBuyIn {
 			ST.hasBuyIn = true
-			ST.value = float64(ST.number) * skt.Close
-			fmt.Println("buy in ",ST.value)
+			ST.buyPrice = skt.Ma20
+			fmt.Println("buy in ",ST.buyPrice)
 		}
 		if !ST.lowestHighAvg && ST.hasBuyIn{
 			ST.hasBuyIn = false
-			ST.value = (float64(ST.number) * skt.Close) * (1-0.02)
-
-			fmt.Println("sale out ",ST.value)
+			ST.salePrice = skt.Ma20
+			ST.value += (ST.salePrice - ST.buyPrice) * 100
+			fmt.Println("sale out ",ST.buyPrice)
 		}
 		//fmt.Print(skt)
 
