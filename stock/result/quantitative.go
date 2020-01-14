@@ -34,7 +34,7 @@ func ConnDB() *sql.DB {
 }
 func QueryData(db *sql.DB,code string)  {
 	var skt = new(struct2db.StockInfo)
-	rows, err := db.Query("select date,code,name,open,high,low,close ,ma20 from his_stock_info where code = ? order by date", code)
+	rows, err := db.Query("select date,code,name,open,high,low,close ,ma20 ,ma10 from his_stock_info where code = ? order by date", code)
 	defer func() {
 		if rows != nil {
 			rows.Close() //可以关闭掉未scan连接一直占用
@@ -48,14 +48,14 @@ func QueryData(db *sql.DB,code string)  {
 	var ST Status
 	ST.number = 100
 	for rows.Next() {
-		err = rows.Scan(&skt.Date,&skt.Code,&skt.Name,&skt.Open,&skt.High,&skt.Low,&skt.Close,&skt.Ma20) //不scan会导致连接不释放
+		err = rows.Scan(&skt.Date,&skt.Code,&skt.Name,&skt.Open,&skt.High,&skt.Low,&skt.Close,&skt.Ma20,&skt.Ma10) //不scan会导致连接不释放
 		if err != nil {
 			fmt.Printf("Scan failed,err:%v", err)
 			return
 		}
 		if skt.Low > skt.Ma20 {
 			ST.lowestHighAvg  = true
-		}else{
+		}else if skt.Low < skt.Ma10 {
 			ST.lowestHighAvg = false
 		}
 		if skt.High < skt.Ma20{
