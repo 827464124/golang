@@ -18,3 +18,18 @@ type StockInfo struct {
 	V_ma20 float64 `db:"v_ma20"`;
 
 }
+
+type RealTimeData struct{
+	Code string
+	Name string
+	Changepercent float64
+	Trade float64
+	Open float64
+	High float64
+	Low float64
+	Close float64
+	Volume float64
+	Turnoverratio float64
+	Amount float64
+	Per float64
+}
